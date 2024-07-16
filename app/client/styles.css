@@ -60,6 +60,14 @@
 }
 
 
+
+ 
+
+.jsonEditor {
+  min-height: 400px;
+}
+
+
 @media (max-width: 600px) {
   .buttonContainer {
     flex-direction: column;

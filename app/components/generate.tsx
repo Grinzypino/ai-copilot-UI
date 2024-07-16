@@ -9,17 +9,21 @@ interface QuestionFormProps {
 }
 
 const QuestionForm: React.FC<QuestionFormProps> = ({ questions, onClose }) => {
-  const [answers, setAnswers] = useState<string[]>(Array(questions.length).fill(""));
+  const [answers, setAnswers] = React.useState<{ [key: number]: string }>({});
 
-  const handleChange = (index: number, event: React.ChangeEvent<HTMLInputElement>) => {
-    const newAnswers = [...answers];
-    newAnswers[index] = event.target.value;
-    setAnswers(newAnswers);
-  };
+
+const handleChange = (index: number, event: React.ChangeEvent<HTMLInputElement>) => {
+  setAnswers((prevAnswers) => ({
+    ...prevAnswers,
+    [index]: event.target.value,
+  }));
+};
+
+
 
   const handleSubmit = () => {
     console.log("Submitted Answers:", answers);
-    onClose(); // Close the modal
+    onClose();  
   };
 
   return (
@@ -33,8 +37,8 @@ const QuestionForm: React.FC<QuestionFormProps> = ({ questions, onClose }) => {
           <TextField
             fullWidth
             variant="outlined"
-            value={answers[index]}
-            onChange={(event) => handleChange(index, event)}
+            value={answers[index] || ""}
+              onChange={(event) => handleChange(index, event as React.ChangeEvent<HTMLInputElement>)}
             placeholder={`Answer ${index + 1}`}
           />
         </Box>
