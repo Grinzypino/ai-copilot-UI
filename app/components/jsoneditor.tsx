@@ -1,8 +1,9 @@
-// components/JSONEditor.tsx
-
 import React from "react";
 import { Box } from "@mui/material";
-import ReactJson from "react-json-view";
+import dynamic from "next/dynamic";
+
+
+const ReactJson = dynamic(() => import("react-json-view"), { ssr: false });
 
 interface JSONEditorProps {
   data: object;
