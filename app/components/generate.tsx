@@ -28,7 +28,7 @@ const handleChange = (index: number, event: React.ChangeEvent<HTMLInputElement>)
 
   return (
     <Box p={2}>
-      <Typography variant="h6" gutterBottom>
+      <Typography variant="h5" gutterBottom>
         Please answer the following questions:
       </Typography>
       {questions.map((question, index) => (

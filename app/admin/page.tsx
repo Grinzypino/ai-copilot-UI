@@ -1,6 +1,6 @@
-// pages/admin.tsx
-"use client";
 
+"use client";
+import Link from 'next/link';
 import React, { useState } from 'react';
 import { Container, Box, TextField, IconButton, Button, Typography, Select, MenuItem, FormControl, InputLabel, SelectChangeEvent } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
@@ -54,9 +54,11 @@ const handleCustomTypeChange = (index: number, event: React.ChangeEvent<HTMLInpu
 
   return (
     <Container maxWidth="md" className="container">
+      <Link href="/"> 
         <Typography variant="h4" gutterBottom>
           Admin Panel
         </Typography>
+        </Link>
       <Box className="box">
         
         {inputFields.map((inputField, index) => (

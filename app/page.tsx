@@ -67,7 +67,7 @@ export default function Home() {
               },
             }}
           >
-           Client Page
+           Client Panel
           </Button>
         </Link>
        

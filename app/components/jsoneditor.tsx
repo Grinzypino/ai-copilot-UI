@@ -17,8 +17,9 @@ const JSONEditor: React.FC<JSONEditorProps> = ({ data, onChange }) => {
         onEdit={(edit) => onChange(edit.updated_src)}
         onAdd={(add) => onChange(add.updated_src)}
         onDelete={(del) => onChange(del.updated_src)}
-        theme="monokai"
+        theme="google"
         displayDataTypes={false}
+        iconStyle="circle"
       />
     </Box>
   );
