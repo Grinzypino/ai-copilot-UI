@@ -54,10 +54,11 @@ const handleCustomTypeChange = (index: number, event: React.ChangeEvent<HTMLInpu
 
   return (
     <Container maxWidth="md" className="container">
-      <Box className="box">
         <Typography variant="h4" gutterBottom>
           Admin Panel
         </Typography>
+      <Box className="box">
+        
         {inputFields.map((inputField, index) => (
           <Box key={index} className="inputRow">
             <FormControl variant="outlined" fullWidth margin="normal">
