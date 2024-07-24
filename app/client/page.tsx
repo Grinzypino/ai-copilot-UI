@@ -1,7 +1,22 @@
-"use client";
+'use client'
+
+import React, { useState } from "react";
 import Link from "next/link";
-import { useState } from "react";
-import { Box, Button, FormControl, InputLabel, MenuItem, Select, SelectChangeEvent, Dialog, DialogTitle, DialogContent, DialogActions, Container, Typography } from "@mui/material";
+import {
+  Box,
+  Button,
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Select,
+  SelectChangeEvent,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+  Container,
+  Typography
+} from "@mui/material";
 import QuestionForm from "../components/generate";
 import JSONEditor from "../components/jsoneditor";
 import "./styles.css";
@@ -74,8 +89,14 @@ export default function Home() {
   const handleSaveJSON = () => {
     if (draftData) {
       console.log("Saving JSON Data:", draftData);
+      // Implement your save logic here if needed
     }
     handleCloseJSONDialog();
+  };
+
+  const handleAnswersSubmitted = (reframedQuestions: object) => {
+    setQuestions(Object.values(reframedQuestions));
+    setOpenQuestionDialog(true);
   };
 
   return (
@@ -96,9 +117,9 @@ export default function Home() {
           >
             <MenuItem value="Option1">Civil Law</MenuItem>
             <MenuItem value="Option2">Criminal Law</MenuItem>
-            <MenuItem value="Option3"> Land Cases</MenuItem>
-            <MenuItem value="Option4"> Marriage Cases</MenuItem>
-            <MenuItem value="Option5"> Writ Petition</MenuItem>
+            <MenuItem value="Option3">Land Cases</MenuItem>
+            <MenuItem value="Option4">Marriage Cases</MenuItem>
+            <MenuItem value="Option5">Writ Petition</MenuItem>
           </Select>
         </FormControl>
         <Box className="buttonContainer">
@@ -115,7 +136,11 @@ export default function Home() {
         <Dialog open={openQuestionDialog} onClose={handleCloseQuestionDialog}>
           <DialogTitle className="dialogTitle">Question Form</DialogTitle>
           <DialogContent>
-            <QuestionForm questions={questions} onClose={handleCloseQuestionDialog} />
+            <QuestionForm
+              questions={questions}
+              onClose={handleCloseQuestionDialog}
+              onAnswersSubmitted={handleAnswersSubmitted}
+            />
           </DialogContent>
           <DialogActions>
           </DialogActions>
