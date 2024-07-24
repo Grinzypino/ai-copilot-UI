@@ -17,30 +17,38 @@ export default function Home() {
     setSelectedOption(event.target.value as string);
   };
 
-  const handleGenerate = () => {
-    const sampleQuestions = [
-      "What is your name?",
-      "What is your email?",
-      "What is your phone number?",
-      "What is your address?",
-      "What is your occupation?",
-    ];
-    setQuestions(sampleQuestions);
-    setOpenQuestionDialog(true);
+  const handleGenerate = async () => {
+    try {
+      const response = await fetch('http://127.0.0.1:5000/generate_q', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ schema_path: 'schemaNexamples.json' }),
+      });
+      const data = await response.json();
+      setQuestions(Object.values(data.q_dict));
+      setOpenQuestionDialog(true);
+    } catch (error) {
+      console.error('Error generating questions:', error);
+    }
   };
 
-  const handleGenerateDraft = () => {
-    const sampleDraft = {
-      title: " Document Draft",
-      description: "This is a sample draft for AI-Copilot",
-      date: new Date().toISOString().split('T')[0],
-      items: [
-        { id: 1, name: "What is your name?", value: "Birat Datta" },
-        { id: 2, name: "What is your email?", value: "birat.datta26+aicopilot@gmail.com" },
-      ],
-    };
-    setDraftData(sampleDraft);
-    setOpenJSONDialog(true);
+  const handleGenerateDraft = async () => {
+    try {
+      const response = await fetch('http://127.0.0.1:5000/generate_draft', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ current_json: draftData }),
+      });
+      const data = await response.json();
+      setDraftData(data);
+      setOpenJSONDialog(true);
+    } catch (error) {
+      console.error('Error generating draft:', error);
+    }
   };
 
   const handleDownload = () => {
@@ -64,21 +72,18 @@ export default function Home() {
   };
 
   const handleSaveJSON = () => {
-  if (draftData) {
-    
-    console.log("Saving JSON Data:", draftData);
-   
-  }
-  handleCloseJSONDialog();
-};
-
+    if (draftData) {
+      console.log("Saving JSON Data:", draftData);
+    }
+    handleCloseJSONDialog();
+  };
 
   return (
     <Container maxWidth="sm" className="container">
       <Link href="/"> 
-      <Typography className="title"variant="h4" gutterBottom>
-        Client Panel
-      </Typography>
+        <Typography className="title" variant="h4" gutterBottom>
+          Client Panel
+        </Typography>
       </Link>
       <Box className="box">
         <FormControl fullWidth>
@@ -113,7 +118,6 @@ export default function Home() {
             <QuestionForm questions={questions} onClose={handleCloseQuestionDialog} />
           </DialogContent>
           <DialogActions>
-             
           </DialogActions>
         </Dialog>
         <Dialog open={openJSONDialog} onClose={handleCloseJSONDialog} maxWidth="md" fullWidth>
@@ -122,9 +126,9 @@ export default function Home() {
             {draftData && <JSONEditor data={draftData} onChange={(updatedData) => setDraftData(updatedData)} />}
           </DialogContent>
           <DialogActions className="dialogActions">
-             <Button variant="contained" color="primary" onClick={handleSaveJSON}>
-    Save
-  </Button>
+            <Button variant="contained" color="primary" onClick={handleSaveJSON}>
+              Save
+            </Button>
             <Button variant="contained" color="primary" onClick={handleDownload}>
               Download JSON
             </Button>
